@@ -75,7 +75,7 @@ python -m venv .venv
 3️. Install dependencies
 pip install -r requirements.txt
 
-🔐 Setup Secrets
+Setup Secrets
 
 Create:
 
@@ -87,14 +87,14 @@ Add:
 OPENAI_API_KEY = "your_openai_key_here"
 API_BASE = "http://localhost:8000"
 
-▶️ Running
+Running
 Start FastAPI backend:
 uvicorn app.main:app --reload --port 8000
 
 Start Streamlit UI:
 streamlit run streamlit_app.py
 
-🧪 How to Use
+How to Use
 Step 1 — Upload documents
 
 Upload all 4 files:
@@ -128,5 +128,6 @@ Upload checkout.html again.
 Click Generate Selenium Script.
 
 You will receive a fully runnable Python script.
+
 
 
