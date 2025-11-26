@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>E-Shop Checkout</title>
+<style>
+  .error { color: red; }
+  #pay-now { background: green; color: white; padding: 10px; }
+</style>
+</head>
+<body>
+  <h1>Checkout</h1>
+
+  <div id="products">
+    <div class="product" data-id="p1">
+      <h3 class="name">Widget A</h3>
+      <p class="price" data-price="30">Price: $30</p>
+      <button class="add-to-cart" id="add-p1">Add to Cart</button>
+    </div>
+    <div class="product" data-id="p2">
+      <h3 class="name">Widget B</h3>
+      <p class="price" data-price="50">Price: $50</p>
+      <button class="add-to-cart" id="add-p2">Add to Cart</button>
+    </div>
+  </div>
+
+  <div id="cart">
+    <h2>Cart Summary</h2>
+    <div id="cart-items"></div>
+    <label>Discount code: <input id="discount" name="discount" /></label>
+    <button id="apply-discount">Apply</button>
+    <p id="discount-msg" class="error" style="display:none;"></p>
+    <p>Total: $<span id="total">0</span></p>
+  </div>
+
+  <form id="user-form">
+    <h2>User Details</h2>
+    <label>Name: <input id="name" name="name" required /></label><span id="name-err" class="error"></span><br/>
+    <label>Email: <input id="email" name="email" required /></label><span id="email-err" class="error"></span><br/>
+    <label>Address: <input id="address" name="address" required /></label><span id="address-err" class="error"></span><br/>
+
+    <h3>Shipping</h3>
+    <label><input type="radio" name="shipping" value="standard" checked /> Standard</label>
+    <label><input type="radio" name="shipping" value="express" /> Express</label>
+
+    <h3>Payment</h3>
+    <label><input type="radio" name="payment" value="cc" checked /> Credit Card</label>
+    <label><input type="radio" name="payment" value="paypal" /> PayPal</label>
+
+    <button type="button" id="pay-now">Pay Now</button>
+  </form>
+
+  <div id="result" style="display:none;">Payment Successful!</div>
+
+<script>
+  // Minimal JS to emulate behaviour - enough for selector matching & simple flows
+  const prices = { 'p1': 30, 'p2': 50 };
+  let cart = {}; function updateTotal(){
+    let total=0;
+    Object.keys(cart).forEach(k=> total += prices[k]*cart[k]);
+    // shipping
+    const shipping = document.querySelector('input[name="shipping"]:checked').value;
+    if (shipping==='express') total += 10;
+    document.getElementById('total').innerText = total;
+  }
+  document.querySelectorAll('.add-to-cart').forEach(btn=>{
+    btn.addEventListener('click', e => {
+      const pid = btn.id.replace('add-','');
+      cart[pid] = (cart[pid]||0)+1;
+      document.getElementById('cart-items').innerText = JSON.stringify(cart);
+      updateTotal();
+    })
+  });
+  document.getElementById('apply-discount').addEventListener('click',()=>{
+    const code=document.getElementById('discount').value.trim();
+    if (code==='SAVE15'){ // product_specs rule
+      const t = parseFloat(document.getElementById('total').innerText);
+      document.getElementById('total').innerText = (t*0.85).toFixed(2);
+      document.getElementById('discount-msg').style.display='none';
+    } else {
+      document.getElementById('discount-msg').innerText='Invalid code'; document.getElementById('discount-msg').style.display='block';
+    }
+  });
+
+  document.getElementById('pay-now').addEventListener('click', ()=>{
+    // simple validation
+    const name=document.getElementById('name').value; const email=document.getElementById('email').value; const address=document.getElementById('address').value;
+    let ok=true;
+    if (!name){ document.getElementById('name-err').innerText=' required'; ok=false; } else document.getElementById('name-err').innerText='';
+    if (!email || !/@/.test(email)){ document.getElementById('email-err').innerText=' invalid'; ok=false; } else document.getElementById('email-err').innerText='';
+    if (!address){ document.getElementById('address-err').innerText=' required'; ok=false; } else document.getElementById('address-err').innerText='';
+    if (!ok) return;
+    document.getElementById('result').style.display='block';
+  });
+</script>
+</body>
+</html>
