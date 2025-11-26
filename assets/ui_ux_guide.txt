@@ -1,0 +1,4 @@
+UI/UX Guidelines:
+- Validation error messages must be displayed in red text next to the field.
+- The 'Pay Now' button should be green (#008000).
+- When payment succeeds, show "Payment Successful!" visibly to the user.
