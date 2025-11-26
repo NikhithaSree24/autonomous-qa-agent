@@ -1,0 +1,76 @@
+[
+  {
+    "Test_ID": "TC-001",
+    "Feature": "Discount Code - Valid",
+    "Test_Scenario": "Apply valid discount code SAVE15 and verify total reduced by 15%.",
+    "Steps": [
+      "Open the checkout page (checkout.html).",
+      "Add items to cart (e.g., Widget A qty 2 @ $30, Widget B qty 1 @ $50).",
+      "Observe pre-discount subtotal (2*30 + 1*50 = $110).",
+      "Enter discount code 'SAVE15' into the discount input and click Apply.",
+      "Verify the discount is applied and the displayed total equals pre-discount total * 0.85."
+    ],
+    "Expected_Result": "Total after applying SAVE15 equals pre-discount total * 0.85 (15% off). UI indicates discount applied.",
+    "Grounded_In": [
+      "product_specs.md",
+      "checkout.html",
+      "ui_ux_guide.txt",
+      "api_endpoints.json"
+    ]
+  },
+  {
+    "Test_ID": "TC-002",
+    "Feature": "Discount Code - Invalid",
+    "Test_Scenario": "Enter an invalid discount code and verify no discount is applied and appropriate error shown.",
+    "Steps": [
+      "Open the checkout page.",
+      "Add one or more items to cart.",
+      "Enter discount code 'BADCODE' into the discount field and click Apply.",
+      "Verify an error message or invalid-code feedback is displayed and the total remains unchanged."
+    ],
+    "Expected_Result": "No discount applied; UI shows an invalid-code message and total equals pre-discount total.",
+    "Grounded_In": [
+      "product_specs.md",
+      "checkout.html",
+      "ui_ux_guide.txt",
+      "api_endpoints.json"
+    ]
+  },
+  {
+    "Test_ID": "TC-003",
+    "Feature": "Discount Code - Blank",
+    "Test_Scenario": "Submit an empty or whitespace-only discount code and verify no effect and possible validation.",
+    "Steps": [
+      "Open the checkout page.",
+      "Add items to cart.",
+      "Leave the discount input blank or enter spaces and click Apply.",
+      "Verify the system either shows a validation message or simply does not change the total."
+    ],
+    "Expected_Result": "No discount applied; either a validation error is displayed or the total remains unchanged.",
+    "Grounded_In": [
+      "product_specs.md",
+      "checkout.html",
+      "ui_ux_guide.txt",
+      "api_endpoints.json"
+    ]
+  },
+  {
+    "Test_ID": "TC-004",
+    "Feature": "Discount Code - Format/Case Handling",
+    "Test_Scenario": "Apply ' save15 ' (leading/trailing spaces) and 'save15' (lowercase) and verify whether discount applies.",
+    "Steps": [
+      "Open the checkout page.",
+      "Add items to cart.",
+      "Enter discount code ' save15 ' (spaces) and click Apply; note result.",
+      "Clear and enter discount code 'save15' (all lowercase) and click Apply; note result.",
+      "Verify whether discount is applied in each case according to the system behavior."
+    ],
+    "Expected_Result": "If system is case-insensitive/trim-enabled then discount applies; otherwise appropriate invalid-code behavior occurs. Test must record observed behavior.",
+    "Grounded_In": [
+      "product_specs.md",
+      "checkout.html",
+      "ui_ux_guide.txt",
+      "api_endpoints.json"
+    ]
+  }
+]

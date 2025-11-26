@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+streamlit
+chromadb
+sentence-transformers
+transformers
+torch        # optional; required for some HF models
+beautifulsoup4
+python-multipart
+pydantic
+requests
+pytest
+selenium
+tqdm
+pdfplumber   # for pdf text extraction (optional)
+unstructured  # optional, if you want
